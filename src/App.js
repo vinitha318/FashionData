@@ -4,8 +4,10 @@ import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import GridListExampleSimple from './components/GridListExampleSimple';
 import CardExampleWithAvatar from './components/CardExampleWithAvatar';
+import BrandsRenderer from './components/BrandsRenderer';
+import DesignersRenderer from './components/DesignersRenderer';
 //import RaisedButton from 'material-ui/RaisedButton';
-//import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 class App extends Component {
   render() {
     return (
@@ -18,11 +20,17 @@ class App extends Component {
           <h1 className="App-title">Fashion Data</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
 
-        <GridListExampleSimple />
-        <CardExampleWithAvatar />
+        </p>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/app/:appId" component={CardExampleWithAvatar} />
+            <Route path="/brands" component={BrandsRenderer} />
+            <Route path="/designers" component={DesignersRenderer} />
+            <Route component={GridListExampleSimple }/>
+          </Switch>
+        </BrowserRouter>
+
       </div>
         </MuiThemeProvider>
     );
