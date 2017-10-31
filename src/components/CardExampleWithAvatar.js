@@ -5,6 +5,8 @@ import FlatButton from 'material-ui/FlatButton';
 import {withRouter} from 'react-router-dom'
 import PropTypes from 'prop-types';
 import request from 'superagent';
+import {GridList, GridTile} from 'material-ui/GridList';
+
 
 const styles = {
     card: {
@@ -14,20 +16,35 @@ const styles = {
         height: 200,
         width: 200
     },
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+    },
+    gridList: {
+        display: 'flex',
+        flexWrap: 'nowrap',
+        overflowX: 'auto',
+    },
+    titleStyle: {
+        color: 'rgb(0, 188, 212)',
+    }
 };
-// const tilesData =
-//     {
-//
-//         "designer": "MAC",
-//         "name": "Snow Ball Face Bag Collection",
-//         "url": "https://shop.nordstrom.com/s/mac-snow-ball-face-bag-collection-nordstrom-exclusive-85-value/4734445?origin=category-personalizedsort",
-//         "price": "$49.50",
-//         "image_urls": [
-//             "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/19/_101849119.jpg?crop=pad&pad_color=FFF&format=jpeg&w=704&h=1080"
-//         ],
-//         "details": "Details & Care What it is: A collection of products that work together to make you the queen of showstopping luminosity.Who it's for: All skin types.What it does: Snowflake-embossed Extra Dimension Skinfinish glazes your cheeks and décolletage, brightens eyes and gleams in all the right place, while a rose gold-handled brush and sequined stunner of a bag complete your kit.Gold collection includes:- Extra Dimension Skinfinish in Whisper of Gilt (0.31 oz.)- 140 SES Synthetic Full Fan Brush- BagPeach collection includes:- Extra Dimension Skinfinish in Show Gold (0.31 oz.)- 140 SES Synthetic Full Fan Brush- BagDermatologist tested; ophthalmologist testedNonacnegenicItem #5438794Free Shipping & Returns See moreGift Options See available gift options for this item.Same-day Delivery  Same-Day Delivery isn't currently available to your default shipping address, but other expedited shipping methods are available at Checkout. Show eligible zip codes and details.",
-//         "description": ""
-//     };
+const tilesData =
+    {
+
+        "designer": "MAC",
+        "name": "Snow Ball Face Bag Collection",
+        "url": "https://shop.nordstrom.com/s/mac-snow-ball-face-bag-collection-nordstrom-exclusive-85-value/4734445?origin=category-personalizedsort",
+        "price": "$49.50",
+        "image_urls": [
+            "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/19/_101849119.jpg?crop=pad&pad_color=FFF&format=jpeg&w=704&h=1080",
+            "https://n.nordstrommedia.com/ImageGallery/store/product/Zoom/4/_101908304.jpg?crop=pad&pad_color=FFF&format=jpeg&trim=color&trimcolor=FFF&w=704&h=1080"
+
+        ],
+        "details": "Details & Care What it is: A collection of products that work together to make you the queen of showstopping luminosity.Who it's for: All skin types.What it does: Snowflake-embossed Extra Dimension Skinfinish glazes your cheeks and décolletage, brightens eyes and gleams in all the right place, while a rose gold-handled brush and sequined stunner of a bag complete your kit.Gold collection includes:- Extra Dimension Skinfinish in Whisper of Gilt (0.31 oz.)- 140 SES Synthetic Full Fan Brush- BagPeach collection includes:- Extra Dimension Skinfinish in Show Gold (0.31 oz.)- 140 SES Synthetic Full Fan Brush- BagDermatologist tested; ophthalmologist testedNonacnegenicItem #5438794Free Shipping & Returns See moreGift Options See available gift options for this item.Same-day Delivery  Same-Day Delivery isn't currently available to your default shipping address, but other expedited shipping methods are available at Checkout. Show eligible zip codes and details.",
+        "description": ""
+    };
 
 
 class  CardExampleWithAvatar extends React.Component {
@@ -36,7 +53,8 @@ class  CardExampleWithAvatar extends React.Component {
         history: PropTypes.object.isRequired,
     }
     state={
-        tilesData:{}
+        tilesData:{},
+        isGalleryOpen:true
     }
 
     componentDidMount(){
@@ -62,6 +80,7 @@ class  CardExampleWithAvatar extends React.Component {
 
     render() {
         return (
+            <div>
             <Card style={styles.card}>
                 {/*<CardHeader*/}
                 {/*title="URL Avatar"*/}
@@ -71,7 +90,7 @@ class  CardExampleWithAvatar extends React.Component {
                 <CardMedia style={styles.media}
                     // overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
                 >
-                    <img src={this.state.tilesData.image_urls} alt="product_image"/>
+                    <img src={this.state.tilesData.image_urls[0]} alt="product_image"/>
                 </CardMedia>
                 <CardTitle title={this.state.tilesData.name} subtitle={"price:" + this.state.tilesData.price}/>
                 <CardText>
@@ -84,7 +103,22 @@ class  CardExampleWithAvatar extends React.Component {
                     <a href={this.state.tilesData.url} target="_blank">
                         <FlatButton label="Visit Product Page"/></a>
                 </CardActions>
-            </Card>)
+            </Card>
+             <p>dhjgddh</p>
+                <div style={styles.root}>
+                    <GridList style={styles.gridList} cols={2.2}>
+                        {this.state.tilesData.image_urls.map((tile) => (
+                            <GridTile
+
+                            >
+                                <img src={tile} />
+                            </GridTile>
+                        ))}
+                    </GridList>
+                </div>
+            </div>
+
+                )
     }
 }
 
