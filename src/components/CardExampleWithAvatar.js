@@ -54,10 +54,31 @@ class  CardExampleWithAvatar extends React.Component {
     }
     state={
         tilesData:{},
-        isGalleryOpen:true
+        isGalleryOpen:true,
+        main_display:'',
+        grid_images:[]
     }
 
-    componentDidMount(){
+    setMutipleImages(){
+        var product=this.state.tilesData;
+        console.log(product);
+        if(product.image_urls.length >1){
+            this.setState({
+                main_display:product.image_urls[0],
+                grid_images:product.image_urls
+            //hasMore: res.body.has_more,
+        })
+        }
+
+        else{
+            this.setState({
+                main_display:product.image_urls,
+                isGalleryOpen:false
+            })
+            }
+
+    }
+    componentWillMount(){
         const prodId = this.props.match.params.appId;
 
         request.get('/products/'+prodId).end((err, res) => {
@@ -72,13 +93,36 @@ class  CardExampleWithAvatar extends React.Component {
                     tilesData:res.body.result
                     //hasMore: res.body.has_more,
                 });
+                this.setMutipleImages();
             }
 
         })
     }
+    // componentDidMount(){
+    //     const prodId = this.props.match.params.appId;
+    //
+    //     request.get('/products/'+prodId).end((err, res) => {
+    //         if (err || !res.body) {
+    //             console.error("Oh no!" + err);
+    //             return;
+    //         }
+    //         else{
+    //             console.log(res.body);
+    //             this.setState({
+    //
+    //                 tilesData:res.body.result
+    //                 //hasMore: res.body.has_more,
+    //             });
+    //             this.setMutipleImages();
+    //         }
+    //
+    //     })
+    //
+    // }
 
 
     render() {
+
         return (
             <div>
             <Card style={styles.card}>
@@ -90,7 +134,7 @@ class  CardExampleWithAvatar extends React.Component {
                 <CardMedia style={styles.media}
                     // overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
                 >
-                    <img src={this.state.tilesData.image_urls[0]} alt="product_image"/>
+                    <img src={this.state.main_display} alt="product_image"/>
                 </CardMedia>
                 <CardTitle title={this.state.tilesData.name} subtitle={"price:" + this.state.tilesData.price}/>
                 <CardText>
@@ -106,7 +150,9 @@ class  CardExampleWithAvatar extends React.Component {
             </Card>
                 <div style={styles.root}>
                     <GridList style={styles.gridList} cols={2.2}>
-                        {this.state.tilesData.image_urls.map((tile) => (
+
+                        {this.state.grid_images.map((tile) => (
+
                             <GridTile
 
                             >
